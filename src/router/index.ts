@@ -3,6 +3,7 @@ import DashboardPage from "../pages/admin/DashboardPage.vue";
 import UserPage from "../pages/admin/users/UserPage.vue";
 import LoginPage from "../pages/auth/LoginPage.vue";
 import SingUpPage from "../pages/auth/SingUpPage.vue";
+import VehiculePage from "../pages/admin/Vehicule/VehiculePage.vue";
 
 
 
@@ -25,13 +26,17 @@ const routes = [
             {
                 path: "/users",
                 component: UserPage
+            },
+            {
+                path: "/vehicules",
+                component: VehiculePage
             }
         ]
     }
 ]
 
 export const router = createRouter({
-     //history: createMemoryHistory('/app'),
+    //history: createMemoryHistory('/app'),
     history: createWebHistory('/app'),
     routes
 })

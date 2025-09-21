@@ -4,7 +4,7 @@ import { _debounce, getUserData } from '../../../../helper/utils';
 
 
 const props = defineProps(['users']);
-const emit = defineEmits(['getUsers']);
+const emit = defineEmits(['getUsers' , 'toggleModal']);
 const params = ref('');
 const page = ref(1)
 const searchUser = _debounce(function () {
@@ -41,10 +41,10 @@ const searchUser = _debounce(function () {
                 <td class="border border-gray-300 py-2 px-4">{{ user?.email }}</td>
                 <td class="border border-gray-300 py-2 px-4">{{ user?.role }}</td>
                 <td class="border flex space-x-4 border-gray-300 py-2 px-4">
-                    <a href="" class="text-green-700 hover:text-green-500 trans">
+                    <a @click="emit('toggleModal' , user?.id)" href="javascript:void(0)" class="text-green-700 hover:text-green-500 trans">
                         <PencilSquareIcon />
                     </a>
-                    <a href="" class="text-red-700 hover:text-red-500">
+                    <a  href="" class="text-red-700 hover:text-red-500">
                         <TrashIcon />
                     </a>
                 </td>

@@ -5,7 +5,7 @@ import { getUserData } from '../../../helper/utils';
 import { useLoginStore } from '../../../stores/auth/login-store';
 import { RouterLink } from 'vue-router';
 
-const toggleSideBar = ref(false);
+const toggleSideBar = ref(true);
 const TopNavBar = ref(false);
 const userData: any = getUserData();
 const loginStore = useLoginStore();
@@ -19,9 +19,12 @@ const toggleTop = () => {
 </script>
 <template>
     <div class="h-screen">
-        <nav :class="`h-full bg-slate-50 w-${toggleSideBar ? '[210px]' : '[21px]'}`">
+        <nav :class="[
+            'h-full bg-slate-50 transition-all duration-300',
+            toggleSideBar ? 'w-[210px]' : 'w-[50px]'
+        ]">
             <div class="flex justify-between p-3">
-                <img v-show="toggleSideBar" class="w-20" :src="App.baseUrl + '/img/logo.png'" alt="" srcset="">
+                <img v-show="toggleSideBar" class="w-20" :src="App.baseUrl + '/img/logo.png'" alt="logo">
                 <button v-if="toggleSideBar" @click="toggle" class="hover:bg-slate-200 px-2 rounded-md">
                     <CheveronIconLeft />
                 </button>
@@ -29,26 +32,34 @@ const toggleTop = () => {
                     <CheveronIconRight />
                 </button>
             </div>
+
             <ul class="flex flex-col p-2 gap-2">
                 <li>
-                    <RouterLink to="/dashboard" active-class="bg-slate-200" class="flex gap-2 hover:bg-slate-200 cursor-pointer px-2 py-2 rounded-md">
+                    <RouterLink to="/dashboard" active-class="bg-slate-200"
+                        class="flex gap-2 hover:bg-slate-200 cursor-pointer px-2 py-2 rounded-md">
                         <HomeIcon class="mt-1" />
                         <span v-show="toggleSideBar">Dashboard</span>
                     </RouterLink>
                 </li>
+
                 <li class="flex hover:bg-slate-200 gap-2 cursor-pointer px-2 py-2 rounded-md">
                     <PayementIcon class="mt-1" />
                     <span v-show="toggleSideBar">Payement</span>
                 </li>
-
                 <li>
-                    <RouterLink active-class="bg-slate-200"
-                        class="flex gap-2 hover:bg-slate-200 cursor-pointer px-2 py-2 rounded-md" to="users">
+                    <RouterLink to="/vehicules" active-class="bg-slate-200"
+                        class="flex gap-2 hover:bg-slate-200 cursor-pointer px-2 py-2 rounded-md">
+                        <TrucIcon class="mt-1" />
+                        <span v-show="toggleSideBar">Vehicules</span>
+                    </RouterLink>
+                </li>
+                <li>
+                    <RouterLink to="/users" active-class="bg-slate-200"
+                        class="flex gap-2 hover:bg-slate-200 cursor-pointer px-2 py-2 rounded-md">
                         <UsersIcon class="mt-1" />
                         <span v-show="toggleSideBar">Users</span>
                     </RouterLink>
                 </li>
-
 
                 <li @click="loginStore.logout"
                     class="text-red-600 flex hover:bg-slate-200 gap-2 cursor-pointer px-2 py-2 rounded-md">
@@ -57,6 +68,7 @@ const toggleTop = () => {
                 </li>
             </ul>
         </nav>
+
         <!-- main Section -->
 
         <!-- main Section -->
