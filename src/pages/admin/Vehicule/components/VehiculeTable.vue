@@ -13,8 +13,8 @@ const emit = defineEmits(['showModal', 'get-vehicules', 'editVehicle', 'uploadIm
             class="text-indigo-600 px-2 py-1 rounded-md border border-indigo-700 hover:bg-indigo-600 decoration-slate-700  hover:text-white transition-colors ease-in ">
             Add New
         </button>
-    </div>
-    <table class="bg-white w-full rounded-md shadow-md border border-gray-300">
+    </div> 
+    <table class="border-collapse bg-white w-full rounded-md shadow-md border border-gray-300">
         <thead>
             <tr class="bg-gray-100 text-left">
                 <th class="border border-gray-300 py-2 px-4">Id</th>
@@ -39,18 +39,18 @@ const emit = defineEmits(['showModal', 'get-vehicules', 'editVehicle', 'uploadIm
                 <td class="border border-gray-300 py-2 px-4">
                     <img :src="vehicule?.image" :alt="vehicule?.name" class="w-10">
                 </td>
-                <td class="border border-gray-300 py-2 px-4">{{ vehicule?.name }}</td>
+                <td class="border  border-gray-300 py-2 px-4">{{ vehicule?.name }}</td>
                 <td class="border border-gray-300 py-2 px-4">{{ vehicule?.model }}</td>
                 <td class="border border-gray-300 py-2 px-4">{{ vehicule?.price }}</td>
                 <td class="border border-gray-300 py-2 px-4">
                     <a @click="emit('uploadImage', vehicule?.id)" href="javascript:void(0)"
-                        class="text-slate-700 hover:text-green-500 trans">
+                        class="text-slate-700 hover:text-indigo-500 trans">
                         <UploadIcon />
                     </a>
                 </td>
                 <td class="border flex space-x-4 border-gray-300 py-2 px-4">
                     <a @click="emit('editVehicule', vehicule)" href="javascript:void(0)"
-                        class="text-green-700 hover:text-green-500 trans">
+                        class="text-green-700 hover:text-green-500 ">
                         <PencilSquareIcon />
                     </a>
                     <a href="javascript:void(0)" @click="emit('removeVehicle' , vehicule)"

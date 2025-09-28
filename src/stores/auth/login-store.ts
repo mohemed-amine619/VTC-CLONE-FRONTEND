@@ -45,7 +45,7 @@ export const useLoginStore = defineStore('login', () => {
                 setUserData(data);
                 successmesage(data?.message);
                 isLoading.value = false
-                router.push('dashboard')
+                router.push('welcom')
             } catch (errors:any) {
                 isLoading.value = false
                 for (const message of errors) {

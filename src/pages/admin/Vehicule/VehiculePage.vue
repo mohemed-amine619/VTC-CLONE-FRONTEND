@@ -39,15 +39,15 @@ onMounted(async () => {
 <template>
     <Loading :loading="loading" />
     <div class="ml-4 mr-4 w-full">
-        <VehiculeModel @getVehicles="vehiculeStore.getVehicules" :show="modalVal" :loading="loading" @toggleModal="vehiculeStore.toggleModal" />
-        <UploadImageModal :show="uploadImageVehiculeModal" @toggleModalUpload="UploadVehicule.toggleModalUpload"
-            :loading="loading" />
+        <VehiculeModel :show="modalVal" :loading="loading" @toggleModal="vehiculeStore.toggleModal" />
+        <UploadImageModal @get-vehicules="vehiculeStore.getVehicules" :show="uploadImageVehiculeModal"
+            @toggleModalUpload="UploadVehicule.toggleModalUpload" />
         <h1 class="text-2xl mb-4">
             Vehicules Page
         </h1>
 
         <VehiculeTable @uploadImage="uploadImage" @removeVehicle='removeVehicule' @editVehicule='editVehicule'
-            @showModal="vehiculeStore.toggleModal" :Vehicules="vehiculesData.data" />
+            @showModal="vehiculeStore.toggleModal" :Vehicules="vehiculesData.data" @get-vehicules="vehiculeStore.getVehicules" />
         <div class="mt-2">
             <TailwindPagination :data="vehiculesData" @pagination-change-page="vehiculeStore.getVehicules" />
         </div>

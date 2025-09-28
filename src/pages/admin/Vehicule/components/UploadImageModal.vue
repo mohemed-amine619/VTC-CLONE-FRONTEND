@@ -1,14 +1,14 @@
 <script setup>
 import { storeToRefs } from 'pinia';
 import { useUploadImage } from '../../../../stores/Vehicule/upload-image';
-import { showError } from '../../../../helper/utils';
+import { showError, successmesage } from '../../../../helper/utils';
 import { App } from '../../../../api/api';
 
 
 
 const UploadVehiculeStore = useUploadImage();
 
-const { uploadImageInput , loading , modalVal } = storeToRefs(UploadVehiculeStore);
+const { uploadImageInput, loading, modalVal } = storeToRefs(UploadVehiculeStore);
 
 function SelectImage(e) {
     const SelectImage = e.target.files[0];
@@ -20,19 +20,20 @@ function SelectImage(e) {
     uploadImageInput.value.image = SelectImage
 }
 const props = defineProps(['show']);
-const emit = defineEmits(['toggleModalUpload' , "getVehicules"]);
+const emit = defineEmits(['toggleModalUpload', "get-vehicules"]);
 
 async function uploadImage() {
-    const payload = await UploadVehiculeStore.uploadVehiculeImage();
     loading.value = true;
+    const payload = await UploadVehiculeStore.uploadVehiculeImage();
     fetch(App.apibaseUrl + "/vehicules/images", payload)
-        .then((response) => response.json())
+        .then(async (response) => response.json())
         .then(async (result) => {
             document.querySelector("#outputImage").src = "";
             document.querySelector('#imageInput').value = ''
             loading.value = false;
             modalVal.value = false
-            await emit('getVehicules');
+            successmesage(result?.message)
+            emit("get-vehicules"); 
         })
         .catch((error) => {
             showError(error?.message);
@@ -50,7 +51,7 @@ async function uploadImage() {
             <input type="file" id="imageInput" @input="SelectImage" />
         </template>
         <template #footer>
-            <button @click="modalVal=false" class="mb-2 bg-red-700 text-white py-2 px-2 rounded-md shadow-sm">
+            <button @click="modalVal = false" class="mb-2 bg-red-700 text-white py-2 px-2 rounded-md shadow-sm">
                 close
             </button>
             <button @click="uploadImage" :disabled="loading"

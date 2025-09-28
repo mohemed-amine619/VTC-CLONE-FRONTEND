@@ -4,8 +4,9 @@ import { ref } from 'vue';
 import { getUserData } from '../../../helper/utils';
 import { useLoginStore } from '../../../stores/auth/login-store';
 import { RouterLink } from 'vue-router';
+import { ADMIN_ROLE } from '../../../Constants/Role';
 
-const toggleSideBar = ref(true);
+const toggleSideBar = ref(false);
 const TopNavBar = ref(false);
 const userData: any = getUserData();
 const loginStore = useLoginStore();
@@ -41,6 +42,13 @@ const toggleTop = () => {
                         <span v-show="toggleSideBar">Dashboard</span>
                     </RouterLink>
                 </li>
+                <li v-show="userData?.User?.role === ADMIN_ROLE">
+                    <RouterLink to="/welcom" active-class="bg-slate-200"
+                        class="flex gap-2 hover:bg-slate-200 cursor-pointer px-2 py-2 rounded-md">
+                        <CarteIcon class="mt-1" />
+                        <span v-show="toggleSideBar">VOYAGE</span>
+                    </RouterLink>
+                </li>
 
                 <li class="flex hover:bg-slate-200 gap-2 cursor-pointer px-2 py-2 rounded-md">
                     <PayementIcon class="mt-1" />
@@ -53,7 +61,7 @@ const toggleTop = () => {
                         <span v-show="toggleSideBar">Vehicules</span>
                     </RouterLink>
                 </li>
-                <li>
+                <li v-show="userData?.User?.role === ADMIN_ROLE">
                     <RouterLink to="/users" active-class="bg-slate-200"
                         class="flex gap-2 hover:bg-slate-200 cursor-pointer px-2 py-2 rounded-md">
                         <UsersIcon class="mt-1" />
@@ -83,7 +91,14 @@ const toggleTop = () => {
                         {{ userData?.User?.name }}
                         <br>
                         <a class="text-indigo-700" href="">{{ userData?.User?.email }}</a>
+                        <br>
+                        Role : {{ userData?.User?.role }}
+                        <br>
+                        <RouterLink class="pt-2 text-indigo-700 underline" to="/profile">
+                            Profile
+                        </RouterLink>
                     </li>
+
                     <li @click="loginStore.logout"
                         class="px-2 py-2 hover:bg-gray-100 rounded-md cursor-pointer text-red-600 ">
                         logout

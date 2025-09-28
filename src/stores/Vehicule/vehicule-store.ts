@@ -1,4 +1,4 @@
-import { defineStore } from "pinia";
+import { acceptHMRUpdate, defineStore } from "pinia";
 import { ref, type Ref } from "vue";
 import getData, { DeleteData, postData, PutData } from "../../helper/http";
 import { showError, successmesage } from "../../helper/utils";
@@ -49,6 +49,7 @@ export const useVehiculeStore = defineStore('vehicule-store', () => {
             successmesage(data?.message);
             v$CreateVehicule.value.$reset();
             CreateVehiculeForm.value = { id: "", name: "", model: '', price: '' }
+            getVehicules();
             modalVal.value = false
             edit.value = false
             loading.value = false
@@ -78,6 +79,7 @@ export const useVehiculeStore = defineStore('vehicule-store', () => {
         try {
             loading.value = true
             const data: any = await getData(`/vehicules?page=${pages}&params=${query}`);
+             vehiculesData.value = [];
             vehiculesData.value = data;
             loading.value = false
         } catch (errors: any) {
@@ -86,9 +88,8 @@ export const useVehiculeStore = defineStore('vehicule-store', () => {
                 showError(message);
             }
         }
-
     }
-    
+   
     return {
         vehiculesData,
         loading,
@@ -102,3 +103,10 @@ export const useVehiculeStore = defineStore('vehicule-store', () => {
         toggleModal,
     }
 });
+
+if (import.meta.hot) {
+    import.meta.hot.accept(
+        acceptHMRUpdate(useVehiculeStore, import.meta.hot)
+    );
+}
+
