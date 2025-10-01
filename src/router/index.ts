@@ -1,4 +1,4 @@
-import { createMemoryHistory, createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
 import DashboardPage from "../pages/admin/DashboardPage.vue";
 import UserPage from "../pages/admin/users/UserPage.vue";
 import LoginPage from "../pages/auth/LoginPage.vue";
@@ -7,7 +7,8 @@ import VehiculePage from "../pages/admin/Vehicule/VehiculePage.vue";
 import { isAdmin } from "../middleware/isAdmin";
 import ProfilePage from "../pages/admin/users/ProfilePage.vue";
 import WelcomPage from "../pages/admin/welcom/WelcomPage.vue";
-import MapPage from "../pages/admin/map/MapPage.vue";
+import CustomerMapPage from "../pages/admin/map/CustomerMapPage.vue";
+import DriverMapPage from "../pages/admin/map/DriverMapPage.vue";
 
 
 
@@ -23,7 +24,7 @@ const routes = [
         component: SingUpPage,
     },
     {
-        path: '/dashboard',
+        path: '/',
         name: 'dashboard',
         component: DashboardPage,
         children: [
@@ -45,8 +46,12 @@ const routes = [
                 component : () => ProfilePage
             },
             {
-                path: "/map",
-                component: () => MapPage
+                path: "/customer_map",
+                component: () => CustomerMapPage
+            },
+            {
+                path: "/driver_map",
+                component: () => DriverMapPage
             }
         ]
     }

@@ -42,7 +42,7 @@ const toggleTop = () => {
                         <span v-show="toggleSideBar">Dashboard</span>
                     </RouterLink>
                 </li>
-                <li v-show="userData?.User?.role === ADMIN_ROLE">
+                <li>
                     <RouterLink to="/welcom" active-class="bg-slate-200"
                         class="flex gap-2 hover:bg-slate-200 cursor-pointer px-2 py-2 rounded-md">
                         <CarteIcon class="mt-1" />
@@ -86,13 +86,14 @@ const toggleTop = () => {
             <div></div>
             <div class="py-3 px-3">
                 <img @click="toggleTop" :src="App.baseUrl + '/img/avatar.png'" alt="" class="rounded-full w-10 h-10">
-                <ul v-show="TopNavBar" class="bg-white absolute right-4 py-3 px-3">
+                <ul v-show="TopNavBar" class="bg-white z-[1000] w-[250px] absolute right-4 py-3 px-3">
                     <li class="px-2 py-2">
                         {{ userData?.User?.name }}
                         <br>
                         <a class="text-indigo-700" href="">{{ userData?.User?.email }}</a>
                         <br>
                         Role : {{ userData?.User?.role }}
+                        <br>
                         <br>
                         <RouterLink class="pt-2 text-indigo-700 underline" to="/profile">
                             Profile

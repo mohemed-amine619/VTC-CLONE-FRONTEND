@@ -1,5 +1,5 @@
 <script setup>
-import Leaflet  from 'leaflet'
+import Leaflet from 'leaflet'
 import { onMounted, ref } from 'vue';
 import { UsemapStore } from '../../../stores/maps/map-store';
 import "leaflet-routing-machine";
@@ -10,11 +10,10 @@ import "leaflet/dist/leaflet.css";
 
 const map = ref(null)
 const mapstore = UsemapStore();
-const {place:PlaceLocation , latitude:LatitudeLocation , longtitude:LongtitudeLocation } = mapstore.getLocationCoordinate();
-const { place: PlaceDestination, longtitude: LogntitudeDestination, latitude:LatitudeDestination } = mapstore.getDestinationcoordinate();
+const { place: PlaceLocation, latitude: LatitudeLocation, longtitude: LongtitudeLocation } = mapstore.getDriverLocationcoordinate();
+
 onMounted(() => {
-    map.value = Leaflet.map('map').setView([LatitudeLocation, LongtitudeLocation], 13);
-    console.log([LatitudeDestination, LogntitudeDestination])
+    map.value = Leaflet.map('map').setView([LatitudeLocation, LongtitudeLocation], 60);
     Leaflet.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map.value);
@@ -22,7 +21,7 @@ onMounted(() => {
     Leaflet.marker([LatitudeLocation, LongtitudeLocation]).addTo(map.value)
         .bindPopup(PlaceLocation)
         .openPopup();
-    Leaflet.marker([LatitudeDestination, LogntitudeDestination]).addTo(map.value)
+   /*  Leaflet.marker([LatitudeDestination, LogntitudeDestination]).addTo(map.value)
         .bindPopup(PlaceDestination)
         .openPopup();
     Leaflet.Routing.control({
@@ -30,16 +29,16 @@ onMounted(() => {
             Leaflet.latLng(LatitudeLocation, LongtitudeLocation),
             Leaflet.latLng(LatitudeDestination, LogntitudeDestination)
         ],
-        lineOptions: { styles: [{ color: "red", weight: 5, opacity: 0.8 }] }, 
-        routeWhileDragging : true
-    }).addTo(map.value);
+        lineOptions: { styles: [{ color: "red", weight: 5, opacity: 0.8 }] },
+        routeWhileDragging: true
+    }).addTo(map.value); */
 
 })
 </script>
 <template>
-<div class="h-screen w-full ">
-    <div class="h-screen w-full " id="map">
+    <div class="h-screen w-full ">
+        <div class="h-screen w-full " id="map">
 
+        </div>
     </div>
-</div>
 </template>

@@ -2,7 +2,7 @@
 import { App } from '../../../../api/api';
 
 
-const props = defineProps(['vehicules'])
+const props = defineProps(['vehicules' , 'hideBookButton'])
 </script>
 <template>
     <div class=" flex flex-col shadow-md" v-for="car in vehicules.data" :key="car?.id">
@@ -20,6 +20,7 @@ const props = defineProps(['vehicules'])
             </div>
             <div class="flex justify-center p-2 mb-2">
                 <button
+                 v-show="hideBookButton"
                     class="gap-2 flex rounded-md border border-indigo-700 text-gray-800 px-2 py-2 hover:bg-indigo-700 hover:text-white font-semibold text-sm">
                     <span>Book Taxi Now</span>
                     <ArrowIconRight class="pt-1" />

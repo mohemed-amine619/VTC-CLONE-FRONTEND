@@ -1,5 +1,5 @@
 <script setup lang="ts">;
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import { App } from '../../../api/api';
 import { useVehiculeStore } from '../../../stores/Vehicule/vehicule-store';
 import { storeToRefs } from 'pinia';
@@ -9,30 +9,32 @@ import SelectLocation from './components/SelectLocation.vue';
 import SelectDestination from './components/SelectDestination.vue';
 import { UseAutoCompleteStore } from '../../../stores/Vehicule/auto-complete-store';
 import { useRouter } from 'vue-router';
+import { hideBookButton } from '../../../middleware/hideBookButton';
 
 
 const vehiculeStore = useVehiculeStore();
 const { vehiculesData } = storeToRefs(vehiculeStore)
 const mapStore = UsemapStore();
-const { location, destination } = storeToRefs(mapStore)
+const { CustomerLocation, CustomerDestination } = storeToRefs(mapStore)
 const AutoCompleteStore = UseAutoCompleteStore();
-const {showSuggestionLocation , queryDestination , queryLocation , showSuggestionDestination } = storeToRefs(AutoCompleteStore);
+const { showSuggestionLocation, queryDestination, queryLocation, showSuggestionDestination } = storeToRefs(AutoCompleteStore);
 const router = useRouter();
 
 
-function selectLocation(place : any) {
-    location.value = place
+const _hideBookButton = ref(hideBookButton());
+function selectLocation(place: any) {
+    CustomerLocation.value = place
     showSuggestionLocation.value = false
     queryLocation.value = place?.properties?.full_address
 }
-function selectDestinationplace (place: any) {
-    destination.value = place
+function selectDestinationplace(place: any) {
+    CustomerDestination.value = place
     showSuggestionDestination.value = false
     queryDestination.value = place?.properties?.full_address
 }
 
 function bookTaxi() {
-    router.push('/map')
+    router.push('/customer_map')
 }
 onMounted(async () => {
     await vehiculeStore.getVehicules();
@@ -58,7 +60,7 @@ onMounted(async () => {
                         <SelectLocation @SelectLocation="selectLocation" />
                         <SelectDestination @SelectDestination="selectDestinationplace" />
                     </div>
-                    <Button @click="bookTaxi"
+                    <Button v-show="_hideBookButton" @click="bookTaxi"
                         class="bg-indigo-700 text-white px-2 py-2 flex justify-center rounded-md w-[100%] font-semibold">
                         <span>Book Taxi Now</span>
                         <ArrowIconRight class="pt-2" />
@@ -67,7 +69,7 @@ onMounted(async () => {
             </div>
         </div>
         <div class=" mx-5 grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-4 lg:grid-cols-5 mb-10">
-            <TaxiCards :vehicules="vehiculesData" />
+            <TaxiCards :vehicules="vehiculesData" :hideBookButton="_hideBookButton" />
         </div>
     </div>
 </template>

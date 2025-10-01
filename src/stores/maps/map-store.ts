@@ -5,23 +5,31 @@ import { showError } from "../../helper/utils";
 
 
 export const UsemapStore = defineStore('map-store', () => {
-    const destination :  Ref<any, any> = ref({});
-    const location : Ref<any , any> = ref({});
+    const CustomerDestination :  Ref<any, any> = ref({});
+    const CustomerLocation: Ref<any, any> = ref({});
+    const DriverLocation: Ref<any, any> = ref({});
     const PlacesData: Ref<any, any> = ref({});
     const loading = ref(false)
-    function getLocationCoordinate() {
-        const longtitude = location?.value?.properties?.coordinates?.longitude
-        const latitude = location?.value?.properties?.coordinates?.latitude
-        const place = location?.value?.properties?.full_address
-        console.log({ longtitude, latitude, place })
+    function getCustomerLocationCoordinate() {
+        const longtitude = CustomerLocation.value?.properties?.coordinates?.longitude
+        const latitude = CustomerLocation?.value?.properties?.coordinates?.latitude
+        const place = CustomerLocation?.value?.properties?.full_address
+   
         return {longtitude , latitude , place}
     }
-    function getDestinationcoordinate() {
-        const longtitude = destination?.value?.properties?.coordinates?.longitude
-        const latitude =    destination?.value?.properties?.coordinates?.latitude
-        const place = destination?.value?.properties?.full_address
-        console.log({ longtitude, latitude, place })
+    function getCustomerDestinationcoordinate() {
+        const longtitude = CustomerDestination?.value?.properties?.coordinates?.longitude
+        const latitude = CustomerDestination?.value?.properties?.coordinates?.latitude
+        const place = CustomerDestination?.value?.properties?.full_address
+
          return { longtitude, latitude, place }
+    }
+    function getDriverLocationcoordinate() {
+        const longtitude = DriverLocation?.value?.properties?.coordinates?.longitude
+        const latitude = DriverLocation?.value?.properties?.coordinates?.latitude
+        const place = DriverLocation?.value?.properties?.full_address
+
+        return { longtitude, latitude, place }
     }
     async function getPlaces(query: any = "") {
         try {
@@ -39,13 +47,15 @@ export const UsemapStore = defineStore('map-store', () => {
     }
 
     return {
-        destination,
-        location,
+        CustomerDestination,
+        CustomerLocation,
+        DriverLocation,
         loading,
         PlacesData,
         getPlaces,
-        getLocationCoordinate,
-        getDestinationcoordinate
+        getCustomerLocationCoordinate,
+        getCustomerDestinationcoordinate,
+        getDriverLocationcoordinate
     }
 })
 
